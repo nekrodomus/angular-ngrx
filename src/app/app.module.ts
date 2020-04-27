@@ -4,7 +4,7 @@ import { StoreModule } from '@ngrx/store';
 import { BrowserModule } from '@angular/platform-browser';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreRouterConnectingModule, DefaultRouterStateSerializer, RouterState } from '@ngrx/router-store';
 
 import { appReducers } from './store/reducers/app.reducers';
 import { environment } from '../environments/environment';
@@ -29,9 +29,10 @@ import { UserDetailsComponent } from './components/user-details/user-details.com
   imports: [
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot(appReducers),
+    StoreModule.forRoot(
+      appReducers),
     EffectsModule.forRoot([UserEffects, ConfigEffects]),
-    StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
+    StoreRouterConnectingModule.forRoot({ routerState: RouterState.Minimal }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     AppRoutingModule
   ],
