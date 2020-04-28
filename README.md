@@ -8,9 +8,7 @@ Version con:
 
 https://github.com/SantiagoGdaR/angular-ngrx.git
 
-
-
-Version con: 
+Version con:
 
 "@ngrx/store": "^9.1.0"
 
