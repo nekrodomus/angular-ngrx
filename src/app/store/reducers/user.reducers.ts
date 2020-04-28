@@ -6,12 +6,12 @@ const userReducers = createReducer(
   initialUserState,
   on(UserActions.getUsers, (state) => ({ 
     ...state, 
-    loading: true, 
+    loading: true 
   })),
   on(UserActions.getUsersSuccess, (state, { users }) => ({ 
     ...state,
     users, 
-    loading: false, 
+    loading: false,
   })),
   on(UserActions.getUsersFailure, (state, { error }) => ({ 
     ...state,
@@ -21,12 +21,13 @@ const userReducers = createReducer(
   })),
   on(UserActions.getUser, (state) => ({ 
     ...state, 
-    loading: true, 
+    loading: true 
   })),
   on(UserActions.getUserSuccess, (state, { user }) => ({ 
     ...state, 
     selectedUser: user,
-    loading: false, })),
+    loading: false
+  })),
   on(UserActions.getUserFailure, (state, { error }) => ({ 
     ...state, 
     selectedUser: null,

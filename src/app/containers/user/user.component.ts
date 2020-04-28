@@ -19,6 +19,12 @@ export class UserComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this._store.dispatch(UserActions.getUser({ id: this._route.snapshot.params.id }));
+
+    if ( this.user$ ) {
+      this._store.dispatch(UserActions.getUser({ id: this._route.snapshot.params.id }));
+    } else {
+      this._store.dispatch(UserActions.getUserFailure({ error: "ERROR" }));
+    }
+    
   }
 }
