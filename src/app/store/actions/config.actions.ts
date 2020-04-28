@@ -1,22 +1,12 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from "@ngrx/store";
+import { IConfig } from "../../models/config.interface";
 
-import { IConfig } from '../../models/config.interface';
-
-export enum EConfigActions {
-  GetConfig = '[Config] Get Config',
-  GetConfigSuccess = '[Config] Get Config Success'
-}
-
-export class GetConfig implements Action {
-  public readonly type = EConfigActions.GetConfig;
-}
-
-export class GetConfigSuccess implements Action {
-  public readonly type = EConfigActions.GetConfigSuccess;
-  constructor(public payload: IConfig) {}
-}
-
-export type ConfigActions =
-  | GetConfig
-  | GetConfigSuccess;
-
+export const getConfig = createAction("[Config] Get Config");
+export const getConfigSuccess = createAction(
+  "[Config API] Get Config Success",
+  props<{ config: IConfig }>()
+);
+export const getConfigFailure = createAction(
+  "[Config API] Get Config Failure",
+  props<{ error: string }>()
+);

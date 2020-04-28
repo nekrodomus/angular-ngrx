@@ -1,26 +1,40 @@
-import { EUserActions } from './../actions/user.actions';
-import { UserActions } from '../actions/user.actions';
+import { Action, on, createReducer } from "@ngrx/store";
+import * as UserActions from '../actions/user.actions';
 import { initialUserState, IUserState } from '../state/user.state';
 
-export const userReducers = (
-  state = initialUserState,
-  action: UserActions
-): IUserState => {
-  switch (action.type) {
-    case EUserActions.GetUsersSuccess: {
-      return {
-        ...state,
-        users: action.payload
-      };
-    }
-    case EUserActions.GetUserSuccess: {
-      return {
-        ...state,
-        selectedUser: action.payload
-      };
-    }
+const userReducers = createReducer(
+  initialUserState,
+  on(UserActions.getUsers, (state) => ({ 
+    ...state, 
+    loading: true, 
+  })),
+  on(UserActions.getUsersSuccess, (state, { users }) => ({ 
+    ...state,
+    users, 
+    loading: false, 
+  })),
+  on(UserActions.getUsersFailure, (state, { error }) => ({ 
+    ...state,
+    users: [], 
+    loading: false, 
+    error
+  })),
+  on(UserActions.getUser, (state) => ({ 
+    ...state, 
+    loading: true, 
+  })),
+  on(UserActions.getUserSuccess, (state, { user }) => ({ 
+    ...state, 
+    selectedUser: user,
+    loading: false, })),
+  on(UserActions.getUserFailure, (state, { error }) => ({ 
+    ...state, 
+    selectedUser: null,
+    loading: false, 
+    error
+  })),
+);
 
-    default:
-      return state;
-  }
-};
+export function getUserReducer(state: IUserState | undefined, action: Action) {
+  return userReducers(state, action);
+}

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 import { IAppState } from './store/state/app.state';
-import { GetConfig } from './store/actions/config.actions';
+import * as ConfigActions from './store/actions/config.actions';
 import { selectConfig } from './store/selectors/config.selector';
 
 @Component({
@@ -17,6 +17,6 @@ export class AppComponent implements OnInit {
   constructor(private _store: Store<IAppState>) {}
 
   ngOnInit() {
-    this._store.dispatch(new GetConfig());
+    this._store.dispatch(ConfigActions.getConfig());
   }
 }

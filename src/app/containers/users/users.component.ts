@@ -1,4 +1,4 @@
-import { GetUsers } from './../../store/actions/user.actions';
+import * as UserActions from './../../store/actions/user.actions';
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
@@ -16,7 +16,7 @@ export class UsersComponent implements OnInit {
   constructor(private _store: Store<IAppState>, private _router: Router) {}
 
   ngOnInit() {
-    this._store.dispatch(new GetUsers());
+    this._store.dispatch(UserActions.getUsers());
   }
 
   navigateToUser(id: number) {

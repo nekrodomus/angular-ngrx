@@ -1,10 +1,11 @@
-import { IConfig } from '../../models/config.interface';
-
+import { IConfig } from "../../models/config.interface";
 
 export interface IConfigState {
   config: IConfig;
+  loading: boolean;
 }
 
 export const initialConfigState: IConfigState = {
-  config: null
+  config: null,
+  loading: false,
 };

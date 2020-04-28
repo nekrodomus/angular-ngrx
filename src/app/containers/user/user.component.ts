@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { IAppState } from '../../store/state/app.state';
 import { selectSelectedUser } from '../../store/selectors/user.selector';
-import { GetUser } from '../../store/actions/user.actions';
+import * as UserActions from '../../store/actions/user.actions';
 
 @Component({
   templateUrl: './user.component.html',
@@ -19,6 +19,6 @@ export class UserComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this._store.dispatch(new GetUser(this._route.snapshot.params.id));
+    this._store.dispatch(UserActions.getUser({ id: this._route.snapshot.params.id }));
   }
 }

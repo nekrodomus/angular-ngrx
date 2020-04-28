@@ -1,25 +1,28 @@
+import { Injectable } from "@angular/core";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { of } from "rxjs";
+import { switchMap, map, catchError } from "rxjs/operators";
 
-import { Injectable } from '@angular/core';
-import { Effect, ofType, Actions } from '@ngrx/effects';
-import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
-
-import { IConfig } from '../../models/config.interface';
-import { ConfigService } from './../../services/config.service';
-import { EConfigActions, GetConfig, GetConfigSuccess } from '../actions/config.actions';
+import * as ConfigActions from "../actions/config.actions";
+import { IConfig } from "../../models/config.interface";
+import { ConfigService } from "./../../services/config.service";
 
 @Injectable()
 export class ConfigEffects {
-  @Effect()
-  getConfig$ = this._actions$.pipe(
-    ofType<GetConfig>(EConfigActions.GetConfig),
-    switchMap(() => this._configService.getConfig()),
-    switchMap((config: IConfig) => {
-      return of(new GetConfigSuccess(config));
-    })
+  getConfig$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(ConfigActions.getConfig),
+      switchMap(() =>
+        this._configService.getConfig().pipe(
+          map((config: IConfig) => ConfigActions.getConfigSuccess({ config })),
+          catchError((error) => of(ConfigActions.getConfigFailure({ error })))
+        )
+      )
+    )
   );
 
   constructor(
     private _configService: ConfigService,
-    private _actions$: Actions) {}
+    private _actions$: Actions
+  ) {}
 }
